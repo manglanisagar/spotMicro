@@ -83,7 +83,7 @@ class ServoConvert():
         Set Servo value
         Input: Value between 0 and 4095
         '''
-        if value_in not in range(4096):
+        if value_in not in list(range(4096)):
             print('Servo value not in range [0,4095]')
         else:
             self.value = value_in
@@ -94,33 +94,33 @@ class ServoConvert():
         Set Servo center value
         Input: Value between 0 and 4095
         '''
-        if center_val not in range(4096):
+        if center_val not in list(range(4096)):
             print('Servo value not in range [0,4095]')
         else:
             self._center = center_val
-            print('Servo %2i center set to %4i'%(self.id+1,center_val))
+            print(('Servo %2i center set to %4i'%(self.id+1,center_val)))
 
     def set_max(self,max_val):
         '''
         Set Servo max value
         Input: Value between 0 and 4095
         '''
-        if max_val not in range(4096):
+        if max_val not in list(range(4096)):
             print('Servo value not in range [0,4095]')
         else:
             self._max = max_val
-            print('Servo %2i max set to %4i'%(self.id+1,max_val))
+            print(('Servo %2i max set to %4i'%(self.id+1,max_val)))
 
     def set_min(self,min_val):
         '''
         Set Servo min value
         Input: Value between 0 and 4095
         '''
-        if min_val not in range(4096):
+        if min_val not in list(range(4096)):
             print('Servo value not in range [0,4095]')
         else:
             self._min = min_val
-            print('Servo %2i min set to %4i'%(self.id+1,min_val))
+            print(('Servo %2i min set to %4i'%(self.id+1,min_val)))
 
 class SpotMicroServoControl():
     def __init__(self):
@@ -154,7 +154,7 @@ class SpotMicroServoControl():
         self.settings = termios.tcgetattr(sys.stdin)
 
     def send_servo_msg(self):
-        for servo_key, servo_obj in self.servos.iteritems():
+        for servo_key, servo_obj in self.servos.items():
             self._servo_msg.servos[servo_obj.id].servo = servo_obj.id+1
             self._servo_msg.servos[servo_obj.id].value = servo_obj.value
             #rospy.loginfo("Sending to %s command %d"%(servo_key, servo_obj.value))
@@ -192,7 +192,7 @@ class SpotMicroServoControl():
         
         while not rospy.is_shutdown():
             print(msg)
-            userInput = raw_input("Command?: ")
+            userInput = input("Command?: ")
 
             if userInput not in validCmds:
                 print('Valid command not entered, try again...')
@@ -202,7 +202,7 @@ class SpotMicroServoControl():
                     print('Final Servo Values')
                     print('--------------------')
                     for i in range(numServos):
-                        print('Servo %2i:   Min: %4i,   Center: %4i,   Max: %4i'%(i,self.servos[i]._min,self.servos[i]._center,self.servos[i]._max))                    
+                        print(('Servo %2i:   Min: %4i,   Center: %4i,   Max: %4i'%(i,self.servos[i]._min,self.servos[i]._center,self.servos[i]._max)))                    
                     break
 
                 elif userInput == 'oneServo':
@@ -213,9 +213,9 @@ class SpotMicroServoControl():
                     # First get servo number to command
                     nSrv = -1
                     while (1):
-                        userInput = input('Which servo to control? Enter a number 1 through 12: ')
+                        userInput = eval(input('Which servo to control? Enter a number 1 through 12: '))
                         
-                        if userInput not in range(1,numServos+1):
+                        if userInput not in list(range(1,numServos+1)):
                             print("Invalid servo number entered, try again")
                         else:
                             nSrv = userInput - 1
@@ -233,7 +233,7 @@ class SpotMicroServoControl():
                             print('Key not in valid key commands, try again')
                         else:
                             keyDict[userInput](self.servos[nSrv])
-                            print('Servo %2i cmd: %4i'%(nSrv,self.servos[nSrv].value))
+                            print(('Servo %2i cmd: %4i'%(nSrv,self.servos[nSrv].value)))
                             self.send_servo_msg()
 
                 elif userInput == 'allServos':
@@ -253,7 +253,7 @@ class SpotMicroServoControl():
                         elif userInput in ('b','n','m'):
                             print('Saving values not supported in all servo control mode')
                         else:
-                            for s in self.servos.values():
+                            for s in list(self.servos.values()):
                                 keyDict[userInput](s)
                             print('All Servos Commanded')
                             self.send_servo_msg()

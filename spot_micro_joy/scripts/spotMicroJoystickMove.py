@@ -128,18 +128,18 @@ class SpotMicroJoystickControl():
         self._vel_cmd_msg.linear.x = axes[self.WALK_AXES_FORWARD] * self.MAX_FORWARD_SPEED
         self._vel_cmd_msg.linear.y = axes[self.WALK_AXES_STRAFE] * self.MAX_STRAFE_SPEED
         self._vel_cmd_msg.angular.z = pi / 180 * axes[self.WALK_AXES_YAW] * self.MAX_YAW_SPEED_DEG
-        print('Cmd Values: x speed: %1.3f m/s, y speed: %1.3f m/s, yaw rate: %1.3f deg/s ' \
-              % (self._vel_cmd_msg.linear.x, self._vel_cmd_msg.linear.y, self._vel_cmd_msg.angular.z * 180 / pi))
+        print(('Cmd Values: x speed: %1.3f m/s, y speed: %1.3f m/s, yaw rate: %1.3f deg/s ' \
+              % (self._vel_cmd_msg.linear.x, self._vel_cmd_msg.linear.y, self._vel_cmd_msg.angular.z * 180 / pi)))
         self._ros_pub_vel_cmd.publish(self._vel_cmd_msg)
 
     def on_joy_angle_mode(self, axes):
         self._angle_cmd_msg.x = pi / 180 * axes[self.ANGLE_AXES_ROLL] * self.MAX_ROLL_DEG * -1
         self._angle_cmd_msg.y = pi / 180 * axes[self.ANGLE_AXES_PITCH] * self.MAX_PATCH_DEG * -1
         self._angle_cmd_msg.z = pi / 180 * axes[self.ANGLE_AXES_YAW] * self.MAX_YAW_DEG
-        print('Cmd Values: phi: %1.3f deg, theta: %1.3f deg, psi: %1.3f deg ' \
+        print(('Cmd Values: phi: %1.3f deg, theta: %1.3f deg, psi: %1.3f deg ' \
               % (
                   self._angle_cmd_msg.x * 180 / pi, self._angle_cmd_msg.y * 180 / pi,
-                  self._angle_cmd_msg.z * 180 / pi))
+                  self._angle_cmd_msg.z * 180 / pi)))
         self._ros_pub_angle_cmd.publish(self._angle_cmd_msg)
 
     def run(self):

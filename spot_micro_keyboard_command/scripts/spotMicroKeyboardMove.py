@@ -129,7 +129,7 @@ class SpotMicroKeyboardControl():
         while not rospy.is_shutdown():
             # Prompt user with keyboard command information, and wait for input keystroke
             print(msg)
-            userInput = raw_input("Command?: ")
+            userInput = input("Command?: ")
 
             if userInput not in valid_cmds:
                 rospy.logwarn('Invalid keyboard command entered: %s', userInput)
@@ -157,8 +157,8 @@ class SpotMicroKeyboardControl():
                     print('Enter command, u to go back to command select: ')
 
                     while (1):
-                        print('Cmd Values: phi: %1.3f deg, theta: %1.3f deg, psi: %1.3f deg '\
-                                %(self._angle_cmd_msg.x*180/pi, self._angle_cmd_msg.y*180/pi, self._angle_cmd_msg.z*180/pi))
+                        print(('Cmd Values: phi: %1.3f deg, theta: %1.3f deg, psi: %1.3f deg '\
+                                %(self._angle_cmd_msg.x*180/pi, self._angle_cmd_msg.y*180/pi, self._angle_cmd_msg.z*180/pi)))
                        
                         userInput = self.getKey()
 
@@ -205,8 +205,8 @@ class SpotMicroKeyboardControl():
                     print('Enter command, u to go back to stand mode: ')
 
                     while (1):
-                        print('Cmd Values: x speed: %1.3f m/s, y speed: %1.3f m/s, yaw rate: %1.3f deg/s '\
-                                %(self._vel_cmd_msg.linear.x,self._vel_cmd_msg.linear.y,self._vel_cmd_msg.angular.z*180/pi))
+                        print(('Cmd Values: x speed: %1.3f m/s, y speed: %1.3f m/s, yaw rate: %1.3f deg/s '\
+                                %(self._vel_cmd_msg.linear.x,self._vel_cmd_msg.linear.y,self._vel_cmd_msg.angular.z*180/pi)))
                        
                         userInput = self.getKey()
 
